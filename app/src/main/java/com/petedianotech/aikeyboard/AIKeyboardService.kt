@@ -23,6 +23,9 @@ class AIKeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionLis
     private lateinit var keyboard: Keyboard
     private val client = OkHttpClient()
     private lateinit var prefs: SharedPreferences
+    private lateinit var themeManager: ThemeManager
+    private lateinit var autoCorrection: AutoCorrection
+    private lateinit var soundVibrationManager: SoundVibrationManager
 
     private var selectedTone = "formal" // default tone
 
@@ -30,6 +33,9 @@ class AIKeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionLis
         super.onCreate()
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         selectedTone = prefs.getString("selected_tone", "formal") ?: "formal"
+        themeManager = ThemeManager(this)
+        autoCorrection = AutoCorrection(this)
+        soundVibrationManager = SoundVibrationManager(this)
     }
 
     override fun onCreateInputView(): View {
@@ -37,11 +43,19 @@ class AIKeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionLis
         keyboard = Keyboard(this, R.xml.qwerty)
         keyboardView.keyboard = keyboard
         keyboardView.setOnKeyboardActionListener(this)
+        applyTheme()
         return keyboardView
+    }
+
+    private fun applyTheme() {
+        val themeColors = themeManager.getThemeColors(themeManager.getCurrentTheme())
+        keyboardView.setBackgroundColor(themeColors.backgroundColor)
     }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
         val inputConnection = currentInputConnection ?: return
+        soundVibrationManager.playKeyTap()
+        soundVibrationManager.vibrateKey()
 
         when (primaryCode) {
             Keyboard.KEYCODE_DELETE -> {
@@ -68,7 +82,9 @@ class AIKeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionLis
             }
             else -> {
                 val char = primaryCode.toChar()
-                inputConnection.commitText(char.toString(), 1)
+                val text = char.toString()
+                val correctedText = autoCorrection.correctText(text)
+                inputConnection.commitText(correctedText, 1)
             }
         }
     }
@@ -161,6 +177,7 @@ class AIKeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionLis
     }
 
     private fun showToneSelector() {
+        soundVibrationManager.vibrateLongPress()
         val tones = arrayOf("formal", "casual", "professional")
         selectedTone = tones[(tones.indexOf(selectedTone) + 1) % tones.size]
         prefs.edit().putString("selected_tone", selectedTone).apply()

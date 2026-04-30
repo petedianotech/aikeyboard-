@@ -17,11 +17,13 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
+        <!-- API Key Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cerebras API Key"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
         <EditText
@@ -32,11 +34,13 @@
             android:inputType="textPassword"
             android:layout_marginBottom="24dp" />
 
+        <!-- Tone Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Default Tone"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
         <Spinner
@@ -45,27 +49,114 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp" />
 
+        <!-- Theme Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/theme_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Sound and Vibration Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound & Vibration"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <CheckBox
+                android:id="@+id/sound_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable Key Sound"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <CheckBox
+                android:id="@+id/vibration_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable Vibration"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Auto Correction Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <CheckBox
+                android:id="@+id/auto_correction_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable Auto Correction"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Save Button -->
         <Button
             android:id="@+id/save_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save Settings"
             android:background="@color/purple_500"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp" />
 
+        <!-- How to Use Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="How to use:"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1. Get your API key from Cerebras.ai\n2. Enter it above and save\n3. Enable AI Keyboard in system settings\n4. Type text and tap AI button to rewrite"
+            android:text="1. Get your API key from Cerebras.ai\n2. Enter it above and save\n3. Enable AI Keyboard in system settings\n4. Type text and tap AI button to rewrite\n5. Long press AI button to cycle tones\n6. Customize sounds, vibrations, and themes"
             android:layout_marginBottom="16dp" />
 
     </LinearLayout>
