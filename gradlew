@@ -9,17 +9,11 @@
 #
 #      https://www.apache.org/licenses/LICENSE-2.0
 #
-# If not applicable law requires a different license agreement or
-# governs your use of this file, the License does not apply to this
-# file. You may obtain a copy of the License at
-#
-#      https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an "AS IS"
-# BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-# or implied. See the License for the specific language governing
-# permissions and limitations under the License.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
 ##############################################################################
@@ -36,31 +30,40 @@
 #           ksh Gradle
 #
 #       Busybox and similar reduced shells will NOT work, because this script
-#       requires all of POSIX Shell
+#       requires all of these POSIX shell features:
+#         * functions;
+#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+#         * compound commands having a testable exit status, especially «case»;
+#         * various built-in commands including «command», «set», and «ulimit».
 #
-#   (2) Ensure the GRADLE_HOME environment variable is not set. This script
+#   Important for patching:
 #
-#       Important for running:
+#   (2) This script targets any POSIX shell, so it avoids extensions provided
+#       by Bash, Ksh, etc; in particular arrays are avoided.
 #
-#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
-#       noncompliant, but you have some other compliant shell such as ksh or
-#       bash, then to run this script, type that shell name before the whole
-#       command line, like:
+#       The "traditional" practice of packing multiple parameters into a
+#       space-separated string is a well documented source of bugs and security
+#       problems, so this is (mostly) avoided, by progressively accumulating
+#       options in "$@", and eventually passing that to Java.
 #
-#           ksh Gradle
+#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
+#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
+#       see the in-line comments for details.
 #
-#       Busybox and similar reduced shells will NOT work, because this script
-#       requires all of POSIX Shell
+#       There are tweaks for specific operating systems such as AIX, CygWin,
+#       Darwin, MinGW, and NonStop.
 #
-#   (2) Ensure the GRADLE_HOME environment variable is not set. This script
-#       will use the directory containing this script as the GRADLE_HOME.
+#   (3) This script is generated from the Groovy template
+#       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
+#       within the Gradle project.
 #
-#       If you want to use a different Gradle home, then you must set the
-#       GRADLE_HOME environment variable before running this script.
+#       You can find Gradle at https://github.com/gradle/gradle/.
 #
 ##############################################################################
 
 # Attempt to set APP_HOME
+
 # Resolve links: $0 may be a link
 app_path=$0
 
@@ -77,13 +80,10 @@ do
     esac
 done
 
-APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
-
-APP_NAME="Gradle"
+# This is normally unused
+# shellcheck disable=SC2034
 APP_BASE_NAME=${0##*/}
-
-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD=maximum
@@ -136,16 +136,20 @@ Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
 fi
 
-# Increase the maximum file descriptors.
+# Increase the maximum file descriptors if we can.
 if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
     case $MAX_FD in #(
       max*)
+        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC3045
         MAX_FD=$( ulimit -H -n ) ||
             warn "Could not query maximum file descriptor limit"
     esac
     case $MAX_FD in  #(
       '' | soft) :;; #(
       *)
+        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC3045
         ulimit -n "$MAX_FD" ||
             warn "Could not set maximum file descriptor limit to $MAX_FD"
     esac
@@ -161,10 +165,10 @@ fi
 
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then
-    APP_HOME=$( cygwinpath --path --mixed "$APP_HOME" )
-    CLASSPATH=$( cygwinpath --path --mixed "$CLASSPATH" )
+    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
 
-    JAVACMD=$( cygwinpath --unix "$JAVACMD" )
+    JAVACMD=$( cygpath --unix "$JAVACMD" )
 
     # Now convert the arguments - kludge to limit ourselves to /bin/sh
     for arg do
@@ -172,11 +176,11 @@ if "$cygwin" || "$msys" ; then
             case $arg in                                #(
               -*)   false ;;                            # don't mess with options #(
               /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
-                    [ -e "$t" ] ;;                      #
+                    [ -e "$t" ] ;;                      #(
               *)    false ;;
             esac
         then
-            arg=$( cygwinpath --path --ignore --mixed "$arg" )
+            arg=$( cygpath --path --ignore --mixed "$arg" )
         fi
         # Roll the args list around exactly as many times as the number of
         # args, so each arg winds up back in the position where it started, but
@@ -189,6 +193,10 @@ if "$cygwin" || "$msys" ; then
         set -- "$@" "$arg"      # push replacement arg
     done
 fi
+
+
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
 # Collect all arguments for the java command;
 #   * $DEFAULT_JVM_OPTS, $JAVA_OPTS, and $GRADLE_OPTS can contain fragments of
