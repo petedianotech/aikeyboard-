@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AI Keyboard</string>
+    <string name="ai_button">AI</string>
+    <string name="tone_formal">Formal</string>
+    <string name="tone_casual">Casual</string>
+    <string name="tone_professional">Professional</string>
+</resources>
