@@ -4,4 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:keyBackground="@android:drawable/btn_default" />
+    android:keyBackground="@drawable/key_background"
+    android:keyTextColor="@color/key_text"
+    android:backgroundDimEnabled="true"
+    android:shadowColor="@color/key_shadow"
+    android:shadowRadius="4" />
